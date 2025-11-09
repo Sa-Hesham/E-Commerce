@@ -2,12 +2,13 @@
 using Domain.Contracts;
 using Microsoft.EntityFrameworkCore;
 using Presistance.Data;
+using System.Threading.Tasks;
 
 namespace E_Commerce.API
 {
     public class Program
     {
-        public static void Main(string[] args)
+        public static async Task Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
 
@@ -28,7 +29,7 @@ namespace E_Commerce.API
 
           using var scope = app.Services.CreateScope();
            var Object = scope.ServiceProvider.GetRequiredService<IDataSeed>();
-            Object.DataSeed();
+           await Object.DataSeedAsync();
          
 
             // Configure the HTTP request pipeline.

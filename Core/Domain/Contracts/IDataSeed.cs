@@ -8,5 +8,5 @@ namespace Domain.Contracts;
 public interface IDataSeed
 {
 
-    void DataSeed();
+   Task  DataSeedAsync();
 }
