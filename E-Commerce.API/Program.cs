@@ -1,4 +1,5 @@
 
+using Domain.Contracts;
 using Microsoft.EntityFrameworkCore;
 using Presistance.Data;
 
@@ -21,7 +22,14 @@ namespace E_Commerce.API
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
             });
 
+            builder.Services.AddScoped<IDataSeed, DataSeed>();  
+
             var app = builder.Build();
+
+          using var scope = app.Services.CreateScope();
+           var Object = scope.ServiceProvider.GetRequiredService<IDataSeed>();
+            Object.DataSeed();
+         
 
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
