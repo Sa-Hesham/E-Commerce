@@ -5,7 +5,7 @@ using Services.ProductServices;
 
 namespace Services.ServiceManger;
 
-internal class ServiceManager (IUnitOfWork _unitofwork , IMapper _mapper ): IServiceManager
+public class ServiceManager (IUnitOfWork _unitofwork , IMapper _mapper ): IServiceManager
 {
     private readonly Lazy<IProductService> _productService = new Lazy<IProductService>(() => new ProductService(_unitofwork,_mapper));
     public IProductService productService => _productService.Value; 

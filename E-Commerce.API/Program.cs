@@ -6,6 +6,7 @@ using Presistance.Data;
 using Presistance.Repositries;
 using Services;
 using Services.Abstracion.ServicesManger;
+using Services.ServiceManger;
 using System.Threading.Tasks;
 
 namespace E_Commerce.API
@@ -30,7 +31,7 @@ namespace E_Commerce.API
             builder.Services.AddScoped<IDataSeed, DataSeed>();  
             builder.Services.AddScoped<IUnitOfWork,UnitOFWork>();
             builder.Services.AddAutoMapper(cfg => { },typeof(ServiceReferance).Assembly);
-            builder.Services.AddScoped<IServiceManager,IServiceManager>();
+            builder.Services.AddScoped<IServiceManager,ServiceManager>();
             
             var app = builder.Build();
 
