@@ -1,8 +1,11 @@
 
 using Domain.Contracts;
 using Microsoft.EntityFrameworkCore;
+
 using Presistance.Data;
 using Presistance.Repositries;
+using Services;
+using Services.Abstracion.ServicesManger;
 using System.Threading.Tasks;
 
 namespace E_Commerce.API
@@ -25,8 +28,10 @@ namespace E_Commerce.API
             });
 
             builder.Services.AddScoped<IDataSeed, DataSeed>();  
-            builder.Services.AddScoped<IUnitOfWork,UnitOFWork>();   
-
+            builder.Services.AddScoped<IUnitOfWork,UnitOFWork>();
+            builder.Services.AddAutoMapper(cfg => { },typeof(ServiceReferance).Assembly);
+            builder.Services.AddScoped<IServiceManager,IServiceManager>();
+            
             var app = builder.Build();
 
           using var scope = app.Services.CreateScope();

@@ -9,7 +9,7 @@ public  class ApplicatonDbcontext : DbContext
    
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.ApplyConfigurationsFromAssembly(typeof(AssemblyReferance).Assembly);
+        modelBuilder.ApplyConfigurationsFromAssembly(typeof(projectReferance).Assembly);
     }
 
 
