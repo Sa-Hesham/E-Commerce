@@ -12,7 +12,8 @@ internal class ProductMapping :Profile
 
         CreateMap<Product, ProductResultDto>()
             .ForMember(des => des.BrandName, options => options.MapFrom(src => src.productBrand.Name))
-            .ForMember(des => des.TypeName, options => options.MapFrom(src => src.productType.Name));
+            .ForMember(des => des.TypeName, options => options.MapFrom(src => src.productType.Name))
+            .ForMember(des => des.PictureUrl, options => options.MapFrom<PictureResolver>());
             
     }
 }

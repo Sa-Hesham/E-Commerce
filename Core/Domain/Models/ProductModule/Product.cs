@@ -3,7 +3,7 @@
 namespace Domain.Models.ProductModule;
 public class Product :BaseEntity<int>
 {
-    public string ? Descriptions { get; set; } 
+    public string ? Description { get; set; } 
 
     public string PictureUrl { get; set; } = null!; 
 
