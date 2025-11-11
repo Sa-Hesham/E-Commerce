@@ -1,12 +1,19 @@
 
+using Domain.Contracts;
 using Microsoft.EntityFrameworkCore;
+
 using Presistance.Data;
+using Presistance.Repositries;
+using Services;
+using Services.Abstracion.ServicesManger;
+using Services.ServiceManger;
+using System.Threading.Tasks;
 
 namespace E_Commerce.API
 {
     public class Program
     {
-        public static void Main(string[] args)
+        public static async Task Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
 
@@ -21,7 +28,17 @@ namespace E_Commerce.API
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
             });
 
+            builder.Services.AddScoped<IDataSeed, DataSeed>();  
+            builder.Services.AddScoped<IUnitOfWork,UnitOFWork>();
+            builder.Services.AddAutoMapper(cfg => { },typeof(ServiceReferance).Assembly);
+            builder.Services.AddScoped<IServiceManager,ServiceManager>();
+            
             var app = builder.Build();
+
+          using var scope = app.Services.CreateScope();
+           var Object = scope.ServiceProvider.GetRequiredService<IDataSeed>();
+           await Object.DataSeedAsync();
+         
 
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
