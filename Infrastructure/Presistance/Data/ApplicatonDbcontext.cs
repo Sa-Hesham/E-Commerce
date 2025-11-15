@@ -1,7 +1,4 @@
 ﻿
-
-
-
 namespace Presistance.Data;
 public  class ApplicatonDbcontext : DbContext
 {

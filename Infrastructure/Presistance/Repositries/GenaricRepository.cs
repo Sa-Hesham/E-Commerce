@@ -1,13 +1,6 @@
-﻿using Domain.Contracts;
-using Domain.Models;
-using Presistance.Data;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿
 namespace Presistance.Repositries;
+
 internal class GenaricRepository<TEntity, Tkey>(ApplicatonDbcontext dbcontext) : IGenaricRepository<TEntity, Tkey> where TEntity : BaseEntity<Tkey>
 {
     private readonly ApplicatonDbcontext _dbcontext = dbcontext;
@@ -20,11 +13,29 @@ internal class GenaricRepository<TEntity, Tkey>(ApplicatonDbcontext dbcontext) :
   
 
     public async Task<IEnumerable<TEntity>> GetAllAsync() =>await _dbcontext.Set<TEntity>().ToListAsync();
-  
 
-    public async Task<TEntity?> GetByIdAsync(Tkey id) => await _dbcontext.FindAsync<TEntity>(id);   
- 
 
-    public void Update(TEntity entity) => _dbcontext.Set<TEntity>().Update(entity); 
-  
+    public async Task<TEntity?> GetByIdAsync(Tkey id) => await _dbcontext.FindAsync<TEntity>(id);
+    public void Update(TEntity entity) => _dbcontext.Set<TEntity>().Update(entity);
+
+    #region Spacefications
+    public  async Task<IEnumerable<TEntity>> GetAllAsync(ISpacifications<TEntity, Tkey> spacifications)
+    {
+        //EntryPoint
+
+        IQueryable<TEntity> query = _dbcontext.Set<TEntity>();
+
+       return  await SpacificaionsEvaluator.CreateQuery<TEntity, Tkey>(query, spacifications) .ToArrayAsync();
+
+
+      
+    }
+
+    public async Task<TEntity?> GetByIdAsync(ISpacifications<TEntity, Tkey> spacifications)
+    {
+        return await SpacificaionsEvaluator.CreateQuery(_dbcontext.Set<TEntity>(), spacifications) .FirstOrDefaultAsync();
+    }
+
+
+    #endregion
 }

@@ -2,7 +2,7 @@
 using Domain.Models.ProductModule;
 using Microsoft.Extensions.Configuration;
 
-
+// must Be Downloda interfaceFrom Microsoft.Extentions,configurations 
 namespace Services.MappingProfile;
 public class PictureResolver(IConfiguration _configuration) : IValueResolver<Product, ProductResultDto, string>
 {

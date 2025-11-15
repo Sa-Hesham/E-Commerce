@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Domain.Contracts;
 using Domain.Models.ProductModule;
+using Services.Specifaions;
 
 namespace Services.ProductServices;
 public class ProductService(IUnitOfWork _getService, IMapper _mapper) : IProductService
@@ -10,13 +11,15 @@ public class ProductService(IUnitOfWork _getService, IMapper _mapper) : IProduct
    
     public async Task<IEnumerable<BrandResultDto>> GetAllBrandsAsync()
     {
-      var productBrand =  await _getService.GetRepository<ProductBrand,int>().GetAllAsync();
+      
+        var productBrand = await _getService.GetRepository<ProductBrand, int>().GetAllAsync();
        return _mapper.Map<IEnumerable<BrandResultDto>>(productBrand);
     }
 
     public  async Task<IEnumerable<ProductResultDto>> GetAllProductsAsync()
     {
-        var products = await _getService.GetRepository<Product,int>().GetAllAsync();    
+        var Specification = new ProductWithBrandAndTypeSpacifications();
+        var products = await _getService.GetRepository<Product,int>().GetAllAsync(Specification);    
         
         return _mapper.Map<IEnumerable<ProductResultDto>>(products);
     }
@@ -27,10 +30,11 @@ public class ProductService(IUnitOfWork _getService, IMapper _mapper) : IProduct
         return _mapper.Map<IEnumerable<TypeResultDto>>(alltypes);
     }
 
-    public async Task<ProductResultDto> GetProductAsync(int Id)
+    public async Task<ProductResultDto> GetProductAsync(int id)
     {
-        
-        var product = await _getService.GetRepository<Product,int >().GetByIdAsync(Id); 
+        var Specification = new ProductWithBrandAndTypeSpacifications(id);
+
+        var product = await _getService.GetRepository<Product,int >().GetByIdAsync(Specification); 
 
         return _mapper.Map<ProductResultDto>(product);  
     }
