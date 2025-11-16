@@ -1,11 +1,5 @@
-﻿using Domain.Contracts;
-using Domain.Models;
-using Microsoft.EntityFrameworkCore.Metadata.Conventions;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿
+
 
 namespace Presistance;
 internal  static class SpacificaionsEvaluator
@@ -20,14 +14,11 @@ internal  static class SpacificaionsEvaluator
             query= query.Where(spacifications.Criteria);
         }
 
-        if (spacifications.IncludeExeprssion is not null && spacifications.IncludeExeprssion.Any())
+        if (spacifications.IsPaginated)
         {
-
-            foreach(var exp in spacifications.IncludeExeprssion)
-            {
-                query = query.Include(exp);
-            }
+            query = query.Skip(spacifications.Skip).Take(spacifications.Take);
         }
+
 
         if (spacifications.OrderBy is not null)
         {
@@ -39,7 +30,16 @@ internal  static class SpacificaionsEvaluator
             query = query.OrderByDescending(spacifications.OrderByDescending);
         }
 
+        if (spacifications.IncludeExeprssion is not null && spacifications.IncludeExeprssion.Any())
+        {
 
+            foreach(var exp in spacifications.IncludeExeprssion)
+            {
+                query = query.Include(exp);
+            }
+        }
+
+       
 
         return query;
     }
