@@ -1,5 +1,7 @@
 ﻿
 using Shared.Dtos;
+using Shared.EntitiesParametrs;
+using Shared.Enums;
 
 namespace Services.Abstracion;
 public interface IProductService
@@ -7,7 +9,7 @@ public interface IProductService
 
     // GetAllProducts 
 
-    Task<IEnumerable<ProductResultDto>> GetAllProductsAsync();
+    Task<IEnumerable<ProductResultDto>> GetAllProductsAsync(ProductParameters parameters);
 
 
 

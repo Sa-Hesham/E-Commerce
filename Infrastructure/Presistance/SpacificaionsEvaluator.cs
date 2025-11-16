@@ -29,6 +29,16 @@ internal  static class SpacificaionsEvaluator
             }
         }
 
+        if (spacifications.OrderBy is not null)
+        {
+            query = query.OrderBy(spacifications.OrderBy);  
+        }
+
+        if(spacifications.OrderByDescending is not null)
+        {
+            query = query.OrderByDescending(spacifications.OrderByDescending);
+        }
+
 
 
         return query;

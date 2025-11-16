@@ -2,6 +2,8 @@
 using Domain.Contracts;
 using Domain.Models.ProductModule;
 using Services.Specifaions;
+using Shared.EntitiesParametrs;
+using Shared.Enums;
 
 namespace Services.ProductServices;
 public class ProductService(IUnitOfWork _getService, IMapper _mapper) : IProductService
@@ -16,9 +18,9 @@ public class ProductService(IUnitOfWork _getService, IMapper _mapper) : IProduct
        return _mapper.Map<IEnumerable<BrandResultDto>>(productBrand);
     }
 
-    public  async Task<IEnumerable<ProductResultDto>> GetAllProductsAsync()
+    public  async Task<IEnumerable<ProductResultDto>> GetAllProductsAsync(ProductParameters parameters)
     {
-        var Specification = new ProductWithBrandAndTypeSpacifications();
+        var Specification = new ProductWithBrandAndTypeSpacifications(parameters);
         var products = await _getService.GetRepository<Product,int>().GetAllAsync(Specification);    
         
         return _mapper.Map<IEnumerable<ProductResultDto>>(products);

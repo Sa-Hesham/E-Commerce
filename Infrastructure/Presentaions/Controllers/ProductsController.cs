@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Services.Abstracion.ServicesManger;
 using Shared.Dtos;
+using Shared.EntitiesParametrs;
+using Shared.Enums;
 
 
 namespace Presentaions.Controllers;
@@ -11,9 +13,9 @@ public class ProductsController (IServiceManager _serviceManager):ControllerBase
 {
     [HttpGet] 
 
-    public async Task<ActionResult<ProductResultDto>> GetAllProductsAsync()
+    public async Task<ActionResult<ProductResultDto>> GetAllProductsAsync([FromQuery]ProductParameters parameters )
     {
-      var products= await _serviceManager.productService.GetAllProductsAsync();
+      var products= await _serviceManager.productService.GetAllProductsAsync( parameters);
         if (products is null)
 
             return NotFound();
@@ -26,7 +28,7 @@ public class ProductsController (IServiceManager _serviceManager):ControllerBase
 
 
 
-    [HttpGet ("productBrands")]
+    [HttpGet ("Brands")]
 
     public async Task<ActionResult<BrandResultDto>> GetAllBrandsAsync()
     {
@@ -42,7 +44,7 @@ public class ProductsController (IServiceManager _serviceManager):ControllerBase
 
 
 
-    [HttpGet("productTypes")] 
+    [HttpGet("types")] 
 
     public async Task<ActionResult<TypeResultDto>> GetAllPRoductsTypeAsync() {
     
@@ -55,7 +57,7 @@ public class ProductsController (IServiceManager _serviceManager):ControllerBase
 
 
 
-    [HttpGet ("{id:int}")]
+    [HttpGet ("{id}")]
 
     public async Task<ActionResult<ProductResultDto>> GetProductAsync(int id )
     {
