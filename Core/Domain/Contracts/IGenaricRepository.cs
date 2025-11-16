@@ -22,4 +22,10 @@ public interface IGenaricRepository <TEntity,Tkey > where TEntity : BaseEntity<T
 
 
 
+
+    Task<IEnumerable<TEntity>> GetAllAsync(ISpacifications<TEntity,Tkey> spacifications );
+
+    Task<TEntity?> GetByIdAsync(ISpacifications<TEntity, Tkey> spacifications);
+
+
 }
