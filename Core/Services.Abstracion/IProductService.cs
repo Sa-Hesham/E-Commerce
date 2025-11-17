@@ -9,7 +9,7 @@ public interface IProductService
 
     // GetAllProducts 
 
-    Task<IEnumerable<ProductResultDto>> GetAllProductsAsync(ProductParameters parameters);
+    Task<PaginationREsult<ProductResultDto>> GetAllProductsAsync(ProductParameters parameters);
 
 
 

@@ -13,7 +13,7 @@ public class ProductParameters
     public string? Search { get; set; }
 
 
-    public int  PageIndex { get; set; }
+	public int PageIndex { get; set; } = 1;
 
 	private int _PageSize = DefaultBageSize; 
 

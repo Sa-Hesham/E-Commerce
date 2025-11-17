@@ -28,4 +28,7 @@ public interface IGenaricRepository <TEntity,Tkey > where TEntity : BaseEntity<T
     Task<TEntity?> GetByIdAsync(ISpacifications<TEntity, Tkey> spacifications);
 
 
+    Task<int> GetCountAsync(ISpacifications<TEntity, Tkey> spacifications);
+
+
 }

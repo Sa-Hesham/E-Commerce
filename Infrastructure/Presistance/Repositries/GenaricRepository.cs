@@ -36,6 +36,14 @@ internal class GenaricRepository<TEntity, Tkey>(ApplicatonDbcontext dbcontext) :
         return await SpacificaionsEvaluator.CreateQuery(_dbcontext.Set<TEntity>(), spacifications) .FirstOrDefaultAsync();
     }
 
+    public async Task<int> GetCountAsync(ISpacifications<TEntity, Tkey> spacifications)
+    {
+        return await SpacificaionsEvaluator.CreateQuery (_dbcontext.Set<TEntity>(),spacifications).CountAsync();
+
+
+
+    }
+
 
     #endregion
 }
