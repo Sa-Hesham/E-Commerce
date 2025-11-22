@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Domain.NotFoundException;
+using Microsoft.AspNetCore.Http;
 using Shared.ModelsErrorDto;
 using System.Net;
 using System.Text.Json;
@@ -39,7 +40,18 @@ public class GlobalExceptionHandlingMiddleWare
         // enum Has  All Satatus Code respnse 
         //context.Response.StatusCode = (int)HttpStatusCode.InternalServerError; 
 
-        context.Response.StatusCode = StatusCodes.Status500InternalServerError;
+        context.Response.StatusCode = ex switch { 
+        
+        
+           NotFound => StatusCodes.Status404NotFound,
+
+           (_)=>StatusCodes.Status500InternalServerError
+        
+        
+        
+        
+        
+        };
 
 
 
