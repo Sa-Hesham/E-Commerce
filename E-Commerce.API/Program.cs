@@ -36,16 +36,25 @@ namespace E_Commerce.API
                 options.InvalidModelStateResponseFactory = ApiResponseFactory.CustomeValidation;
 
             });
+            #region Conection service
+
             builder.Services.AddDbContext<ApplicatonDbcontext>(options =>
             {
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
             });
+            #endregion
+            #region UnitOFWork-ServiceManger
 
-            builder.Services.AddScoped<IDataSeed, DataSeed>();  
-            builder.Services.AddScoped<IUnitOfWork,UnitOFWork>();
-            builder.Services.AddAutoMapper(cfg => { },typeof(ServiceReferance).Assembly);
-            builder.Services.AddScoped<IServiceManager,ServiceManager>();
-            
+
+            builder.Services.AddScoped<IDataSeed, DataSeed>();
+            builder.Services.AddScoped<IUnitOfWork, UnitOFWork>();
+            builder.Services.AddScoped<IServiceManager, ServiceManager>();
+
+            #endregion
+            #region Mapping Service 
+            builder.Services.AddAutoMapper(cfg => { }, typeof(ServiceReferance).Assembly);
+
+            #endregion
             var app = builder.Build();
 
           using var scope = app.Services.CreateScope();
