@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Domain.Contracts;
 using Domain.Models.ProductModule;
+using Domain.NotFoundException;
 using Services.Specifaions;
 using Shared.EntitiesParametrs;
 using Shared.Enums;
@@ -43,6 +44,7 @@ public class ProductService(IUnitOfWork _getService, IMapper _mapper) : IProduct
 
         var product = await _getService.GetRepository<Product,int >().GetByIdAsync(Specification); 
 
-        return _mapper.Map<ProductResultDto>(product);  
+      return  product is null ? throw new ProductNotFoundException(id) : _mapper.Map<ProductResultDto>(product);
+
     }
 }
