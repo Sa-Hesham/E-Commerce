@@ -1,5 +1,6 @@
 
 using Domain.Contracts;
+using E_Commerce.API.MiddleWare;
 using Microsoft.EntityFrameworkCore;
 
 using Presistance.Data;
@@ -44,6 +45,7 @@ namespace E_Commerce.API
            var Object = scope.ServiceProvider.GetRequiredService<IDataSeed>();
            await Object.DataSeedAsync();
          
+            app.UseMiddleware<GlobalExceptionHandlingMiddleWare>(); 
 
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
