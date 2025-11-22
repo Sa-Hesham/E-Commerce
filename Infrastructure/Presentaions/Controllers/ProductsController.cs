@@ -13,7 +13,7 @@ public class ProductsController (IServiceManager _serviceManager):ControllerBase
 {
     [HttpGet] 
 
-    public async Task<ActionResult<ProductResultDto>> GetAllProductsAsync([FromQuery]ProductParameters parameters )
+    public async Task<ActionResult<PaginationREsult<ProductResultDto>>> GetAllProductsAsync([FromQuery]ProductParameters parameters )
     {
       var products= await _serviceManager.productService.GetAllProductsAsync( parameters);
         if (products is null)

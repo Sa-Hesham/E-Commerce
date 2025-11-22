@@ -41,6 +41,10 @@ internal class ProductWithBrandAndTypeSpacifications:BaseSpacefications<Product 
 
 
         }
+
+
+
+        AddPagination(parameters.PageSize,parameters.PageIndex);
     }
 
 

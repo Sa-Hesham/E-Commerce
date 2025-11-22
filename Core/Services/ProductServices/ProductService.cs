@@ -18,12 +18,17 @@ public class ProductService(IUnitOfWork _getService, IMapper _mapper) : IProduct
        return _mapper.Map<IEnumerable<BrandResultDto>>(productBrand);
     }
 
-    public  async Task<IEnumerable<ProductResultDto>> GetAllProductsAsync(ProductParameters parameters)
+    public  async Task<PaginationREsult<ProductResultDto>> GetAllProductsAsync(ProductParameters parameters)
     {
         var Specification = new ProductWithBrandAndTypeSpacifications(parameters);
         var products = await _getService.GetRepository<Product,int>().GetAllAsync(Specification);    
         
-        return _mapper.Map<IEnumerable<ProductResultDto>>(products);
+        var prdouctresult= _mapper.Map<IEnumerable<ProductResultDto>>(products);
+        int PageSize = prdouctresult.Count();
+        var Countspac= new ProductCountSpacficaions(parameters);    
+        int ToalCount = await _getService.GetRepository<Product,int>().GetCountAsync(Countspac);
+        return new PaginationREsult<ProductResultDto>(PageSize, parameters.PageIndex, ToalCount, prdouctresult);
+      
     }
 
     public async Task<IEnumerable<TypeResultDto>> GetAllTypesAsync()

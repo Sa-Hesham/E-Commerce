@@ -39,5 +39,26 @@ internal abstract class BaseSpacefications<TEntity, Tkey> : ISpacifications<TEnt
     {
         OrderByDescending = orderByDesc;
     }
+    public int Take {  get; private set; }
+
+    public int Skip { get; private set; }
+
+
+    public bool IsPaginated { get; private set; } = false;
+
+
+
+    protected void AddPagination ( int pagesize , int PageIndex)
+    {
+
+        IsPaginated = true; 
+
+        Take= pagesize;
+
+        Skip = (PageIndex-1)*pagesize;
+
+    }
+
+
 
 }
