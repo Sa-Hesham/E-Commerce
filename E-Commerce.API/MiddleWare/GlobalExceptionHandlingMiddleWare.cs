@@ -23,14 +23,31 @@ public class GlobalExceptionHandlingMiddleWare
 
         try
         {
-            await _next(context); 
 
+            await _next(context);
+
+            if (context.Response.StatusCode == StatusCodes.Status404NotFound) 
+                await HandleExceptionAsync (context);
         }
         catch (Exception ex)
         {
             _logger.LogError($"SomeThing Went Wrong  ===> {ex.Message}");
             await HandleExceptionAsync(context, ex);
         }
+    }
+
+    private async Task HandleExceptionAsync(HttpContext context)
+    {
+        context.Response.ContentType = "application/json";
+        var response = new ErrorDetails()
+        {
+            StatusCode = StatusCodes.Status404NotFound,
+            ErrorMessage = $"The End point with url {context.Request.Path} NoT Found "
+
+        }.ToString();
+
+
+        await  context.Response.WriteAsync(response);
     }
 
     private async Task HandleExceptionAsync(HttpContext context, Exception ex)
